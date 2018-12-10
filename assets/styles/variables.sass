@@ -1,0 +1,93 @@
+// $color
+$colorPrimary: #66292D
+$colorSecondary: #c48953
+$colorWhite: #fff
+$colorGray: #48454C
+$colorFont: $colorPrimary
+
+
+// Helvetica 是蘋果的預設字體
+// roboto 是Android的預設字體
+// arial 是Windows的預設字體
+$fontStyle: '微軟正黑體', 'Noto Sans', 'Helvetica', 'roboto', arial, sans-serif
+$fontStyleEn: 'roboto', 'Noto Sans', '微軟正黑體','Helvetica',  arial, sans-serif
+
+
+// == $mixin ==
+// clearfix 清除浮動
+@mixin clearfix
+	&:after
+		content: ""
+		display: table
+		clear: both
+
+// position absolute center 置中
+@mixin abCenter
+	position: absolute
+	top: 50%
+	left: 50%
+	transform: translate(-50%,-50%)
+
+// flex 排版置中
+@mixin flexCenter
+    display: flex
+    align-items: center
+    justify-content: center
+
+// 背景圖
+@mixin bgCenter($w: 'none', $h: 'none')
+  @if $w != 'none'
+    width: $w
+  @if $h != 'none'
+    height: $h
+  background-repeat: no-repeat
+  background-position: center
+  background-size: cover
+
+// 隱藏，但元素存在
+@mixin hideEl
+  opacity: 0
+  z-index: -1
+  visibility: hidden
+
+@mixin showEl
+  visibility: visible
+  z-index: 1
+  opacity: 1
+
+
+// rwd斷點
+@mixin rwd($breakpoint)
+	@if $breakpoint == xs
+		@media (max-width: 375px) { @content }
+	@if $breakpoint == sm
+		@media (max-width: 568px) { @content }
+	@if $breakpoint == pad
+		@media (max-width: 768px) { @content }
+	@if $breakpoint == md
+		@media (max-width: 1024px) { @content }
+	@if $breakpoint == lg
+		@media (max-width: 1200px) { @content }
+	@if $breakpoint == llg
+		@media (max-width: 1540px) { @content }
+// == $mixin End ==
+
+
+// == $extend ==
+%hCenter
+  &:after
+    content: ''
+    width: 0
+    height: 100%
+    display: inline-block
+    position: relative
+    vertical-align: middle
+  > *
+    display: inline-block
+    vertical-align: middle
+
+%moreText
+  overflow: hidden
+  white-space: nowrap
+  text-overflow: ellipsis
+// == $extend End ==

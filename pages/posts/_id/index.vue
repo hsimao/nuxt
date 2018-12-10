@@ -3,7 +3,8 @@
     <section class="post">
       <h1>{{loadedPost.title}}</h1>
       <div class="post-details">
-        <div>最後一次更新{{loadedPost.updatedDate}}</div>
+        <div>最後一次更新{{loadedPost.updatedDate |
+          formatDate}}</div>
         <div>作者：{{loadedPost.author}}</div>
       </div>
       <p>{{loadedPost.content}}</p>
@@ -15,15 +16,13 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   name: "post-page-detail",
   asyncData(context) {
-    return axios
-      .get(`https://myfiredase.firebaseio.com/posts/${context.params.id}.json`)
-      .then(res => {
-        return { loadedPost: res.data };
+    return context.app.$axios
+      .$get(`/posts/${context.params.id}.json`)
+      .then(data => {
+        return { loadedPost: data };
       })
       .catch(err => console.log(err));
   }

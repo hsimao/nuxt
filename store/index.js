@@ -1,5 +1,4 @@
 import Vuex from "vuex";
-import axios from "axios";
 
 const createStore = () => {
   return new Vuex.Store({
@@ -26,13 +25,13 @@ const createStore = () => {
       // 第一次加載時在server端先取一次資料，並儲存到store
       // 接下來用戶端即可調用store資料，而不重複再跟server取資料
       nuxtServerInit(vuexContext, context) {
-        return axios
-          .get("https://myfiredase.firebaseio.com/posts.json")
-          .then(res => {
+        return context.app.$axios
+          .$get("/posts.json")
+          .then(data => {
             // 將原始firebase物件資料轉為陣列
             const postsArray = [];
-            for (let key in res.data) {
-              postsArray.push({ ...res.data[key], id: key });
+            for (let key in data) {
+              postsArray.push({ ...data[key], id: key });
             }
             vuexContext.commit("setPosts", postsArray);
           })
@@ -45,19 +44,19 @@ const createStore = () => {
           ...post,
           updatedDate: new Date()
         };
-        return axios
-          .post("https://myfiredase.firebaseio.com/posts.json", createdPost)
-          .then(res => {
+        return this.$axios
+          .$post("/posts.json", createdPost)
+          .then(data => {
             // 資料庫新增成功，同步更新vuex資料
-            commit("addPost", { ...createdPost, id: res.data.name });
+            commit("addPost", { ...createdPost, id: data.name });
           })
           .catch(err => console.log(err));
       },
 
       // 編輯文章
       editPost({ commit }, post) {
-        return axios
-          .put(`https://myfiredase.firebaseio.com/posts/${post.id}.json`, post)
+        return this.$axios
+          .$put(`/posts/${post.id}.json`, post)
           .then(() => {
             // 資料庫更新成功，同步更新vuex
             commit("editPost", post);

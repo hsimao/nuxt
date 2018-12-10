@@ -5,12 +5,17 @@
 </template>
 
 <script>
-import PostList from "@/components/Posts/PostList";
-
 export default {
   name: "posts-page",
-  components: {
-    PostList
+  head: {
+    title: "Nuxt Posts",
+    meta: [
+      {
+        hid: "description",
+        name: "description",
+        content: "Nuxt Posts 描述說明"
+      }
+    ]
   },
   computed: {
     loadedPosts() {

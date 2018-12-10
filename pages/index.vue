@@ -6,14 +6,12 @@
 </template>
 
 <script>
-import PostList from "@/components/Posts/PostList";
 export default {
   head: {
-    title: "hello",
-    meta: [{ hid: "description", name: "description", content: "描述說明" }]
-  },
-  components: {
-    PostList
+    title: "Nuxt Home",
+    meta: [
+      { hid: "description", name: "description", content: "Nuxt Home 描述說明" }
+    ]
   },
   computed: {
     loadedPosts() {
