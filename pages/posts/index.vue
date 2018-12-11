@@ -6,6 +6,7 @@
 
 <script>
 export default {
+  middleware: "log",
   name: "posts-page",
   head: {
     title: "Nuxt Posts",

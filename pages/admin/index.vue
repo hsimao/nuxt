@@ -2,6 +2,7 @@
   <div class="admin-page">
     <section class="new-post">
       <AppButton @click="$router.push('/admin/new-post')">新增文章</AppButton>
+      <AppButton style="margin-left: 10px" @click="onLogout">登出</AppButton>
     </section>
     <section class="existing-posts">
       <h1>目前文章</h1>
@@ -13,10 +14,17 @@
 <script>
 export default {
   name: "admin",
+  middleware: ["check-auth", "auth"],
   layout: "admin",
   computed: {
     loadedPosts() {
       return this.$store.getters.loadedPosts;
+    }
+  },
+  methods: {
+    onLogout() {
+      this.$store.dispatch("logout");
+      this.$router.push("/admin/auth");
     }
   }
 };

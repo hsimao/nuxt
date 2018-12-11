@@ -1,10 +1,10 @@
 <template>
   <div class="admin-auth-page">
     <div class="auth-container">
-      <form>
-        <AppControlInput type="email">E-Mail
+      <form @submit.prevent="onSubmit">
+        <AppControlInput v-model="email" type="email">E-Mail
           Address</AppControlInput>
-        <AppControlInput type="password">Password</AppControlInput>
+        <AppControlInput v-model="password" type="password">Password</AppControlInput>
         <AppButton type="submit">{{ isLogin ?
           'Login' : 'Sign Up' }}</AppButton>
         <AppButton type="button" btn-style="inverted"
@@ -21,8 +21,21 @@ export default {
   layout: "admin",
   data() {
     return {
-      isLogin: true
+      isLogin: true,
+      email: "",
+      password: ""
     };
+  },
+  methods: {
+    onSubmit() {
+      this.$store
+        .dispatch("authUser", {
+          isLogin: this.isLogin,
+          email: this.email,
+          password: this.password
+        })
+        .then(() => this.$router.push("/admin"));
+    }
   }
 };
 </script>

@@ -30,8 +30,8 @@ module.exports = {
   loading: {
     color: "blue",
     failedColor: "red",
-    height: "4px",
-    duration: 5000,
+    height: "2px",
+    duration: 3000,
     continuous: true
   },
   // 自定義loading組件
@@ -71,7 +71,8 @@ module.exports = {
   },
   // 環境變量設定
   env: {
-    baseUrl: process.env.BASE_URL || "https://myfiredase.firebaseio.com/"
+    baseUrl: process.env.BASE_URL || "https://myfiredase.firebaseio.com/",
+    firebaseAPIKey: "AIzaSyBdVxF4inqnXtqiqFLawj0dewOAPsl65j4"
   },
   // 設置router
   router: {
