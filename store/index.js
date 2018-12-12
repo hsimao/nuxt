@@ -97,6 +97,9 @@ const createStore = () => {
             // 使用cookie儲存來讓伺服器端也能讀取，或統一都用cookie也可
             Cookie.set("jwt", res.idToken);
             Cookie.set("tokenExpiration", tokenExpiration);
+            return this.$axios.$post("http://localhost:3000/api/track-data", {
+              data: "hello"
+            });
           })
           .catch(err => console.log(err));
       },
@@ -125,7 +128,7 @@ const createStore = () => {
             .split(";")
             .find(val => val.trim().startsWith("tokenExpiration="))
             .split("=")[1];
-        } else {
+        } else if (process.client) {
           // 用戶端使用localStorage
           token = localStorage.getItem("token");
           expirationDate = localStorage.getItem("tokenExpiration");

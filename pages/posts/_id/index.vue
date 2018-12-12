@@ -19,6 +19,12 @@
 export default {
   name: "post-page-detail",
   asyncData(context) {
+    // 判斷是否已經有靜態編譯傳遞過來的檔案，若有就取用並回傳，不執行以下http請求
+    if (context.payload) {
+      return {
+        loadedPost: context.payload.postData
+      };
+    }
     return context.app.$axios
       .$get(`/posts/${context.params.id}.json`)
       .then(data => {

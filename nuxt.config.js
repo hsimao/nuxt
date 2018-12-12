@@ -1,6 +1,11 @@
 const pkg = require("./package");
+const bodyParser = require("body-parser");
+const axios = require("axios");
 
 module.exports = {
+  // mode: "universal",
+  // mode: "spa",
+  // npm run generate
   mode: "universal",
 
   /*
@@ -98,5 +103,27 @@ module.exports = {
   transition: {
     name: "fade",
     mode: "out-in"
+  },
+
+  serverMiddleware: [bodyParser.json(), "~/api"],
+
+  // 產出靜態頁面
+  generate: {
+    routes: function() {
+      // 從資料出抓出所有文章資訊，逐一產出各別頁面資料夾與檔案
+      return axios
+        .get("https://myfiredase.firebaseio.com/posts.json")
+        .then(res => {
+          const routes = [];
+          for (const key in res.data) {
+            routes.push({
+              route: "/posts/" + key,
+              // 將文章資料儲存起來，交由前端判斷如果是靜態頁面就調用，不重新請求
+              payload: { postData: res.data[key] }
+            });
+          }
+          return routes;
+        });
+    }
   }
 };
